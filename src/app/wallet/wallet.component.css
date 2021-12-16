@@ -1,0 +1,60 @@
+
+
+
+.forsted-glass.teal {
+  --border-color: #58f3cd;
+  --bg-board-color: rgba(59,208,216,0.2);
+  --bg-board-color-2: rgba(59,208,216,0);
+  --text-color: #3bd0d8;
+  --blur-size: 6px;
+  --border-radius: 12px;
+}
+ .forsted-glass{
+   position: relative;
+   -webkit-backdrop-filter: blur(var(--blur-size));
+   backdrop-filter: blur(var(--blur-size));
+   color: var(--text-color);
+   border-radius: var(--border-radius);
+   background: linear-gradient(
+     126.7deg,var(--bg-board-color) 28.7%,var(--bg-board-color));
+   background: linear-gradient(
+     126.7deg,var(--bg-board-color) 28.7%,var(--bg-board-color-2,var(--bg-board-color)));
+ }
+
+.forsted-glass:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  opacity: .7;
+  background: transparent;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1.5px var(--border-color);
+  box-shadow: inset 0 0 0 var(--border-line-width,1.5px) var(--border-color);
+  -webkit-mask-image: radial-gradient(at -31%,at -58%,rgba(0,0,0,.5) 34%,transparent 60%),linear-gradient(270deg,rgba(0,0,0,.2) 0,transparent 13%),linear-gradient(hsl(0deg 0% 0%/5%),hsl(0deg 0% 0%/5%));
+  mask-image: radial-gradient(at -31%,at -58%,rgba(0,0,0,.5) 34%,transparent 60%),linear-gradient(270deg,rgba(0,0,0,.2) 0,transparent 13%),linear-gradient(hsl(0deg 0% 0%/5%),hsl(0deg 0% 0%/5%));
+  -webkit-mask-image: radial-gradient(at -31% -58%,rgba(0,0,0,.5) 34%,transparent 60%),linear-gradient(
+    270deg,rgba(0,0,0,.2) 0,transparent 13%),linear-gradient(hsl(0deg 0% 0%/5%),hsl(0deg 0% 0%/5%));
+  mask-image: radial-gradient(at -31% -58%,rgba(0,0,0,.5) 34%,transparent 60%),linear-gradient(270deg,rgba(0,0,0,.2) 0,transparent 13%),linear-gradient(hsl(0deg 0% 0%/5%),hsl(0deg 0% 0%/5%));
+}
+
+
+ .button-like {
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   transition: 75ms;
+   font-weight: 700;
+   font-size: 14px;
+   line-height: 18px;
+   padding: 13px 20px;
+ }
+
+.button-like .font {
+  display: inline-block;
+}

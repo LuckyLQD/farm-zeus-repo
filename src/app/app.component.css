@@ -1,0 +1,14 @@
+.main-container .dark-theme{
+  height: 100%;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px;
+}
+
+.dark-theme nav {
+  color: #fff;
+}
+

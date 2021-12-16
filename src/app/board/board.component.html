@@ -1,0 +1,187 @@
+<div class="board-container" id="boardContainer">
+
+  <div class="board-list-item children-center fz-forsted-glass fz-neon">
+    <div class="board-list-item-upper" (click)="onItemClick()">
+      <div style="display: flex; flex-direction: row; margin: 0px 50px;">
+        <span>
+          <div class="icon-like forsted-glass teal" style="width: 65px; height: 40px;">
+            <img style="display: inline-block; width: 30px; height: 30px; position: absolute; left: 7px; " src="../../assets/img/eth.png" class="icon">
+            <img style="display: inline-block; width: 30px; height: 30px; left: 30px; index: 1; position: absolute;" src="../../assets/img/usdt.png" class="icon">
+          </div>
+        </span>
+        <span style="margin: 5px 10px;">Heco LendHub USDT-ETH Fund</span>
+      </div>
+      <div style="margin: 0px ; font-size: 13px;"><span>{{totalAsset}} USDT</span><div style="color: #adc6ff;">TOTAL VALUE LOCKED</div></div>
+      <div style="margin: 0px 50px; font-size: 13px;"><span>N/A</span><div style="color: #adc6ff;">APY</div></div>
+    </div>
+
+    <div class="board-list-item-lower row" [hidden]="!showDetail">
+      <nav role="navigation">
+        <ul class="nav nav-tabs">
+          <li role="presentation" class="nav-item active" [ngClass]="{active: isDeposit}"><a class="nav-link" href="#" (click)="toggleDeposit()">Deposit</a></li>
+          <li role="presentation" class="nav-item" [ngClass]="{active: !isDeposit}"><a class="nav-link" href="#" (click)="toggleWithdraw()">Withdraw</a></li>
+        </ul>
+      </nav>
+
+
+<!--      Deposit Panel-->
+      <div class="row" [hidden]="!isDeposit">
+        <!--        Collapse left card-->
+        <div class="col-md-6 board-list-item-left-card">
+          <div class="card card-transparent">
+            <div class="card-body">
+              <h6 class="card-title">Deposit USDT into Heco LendHub USDT-ETH Fund</h6>
+              <div class="fz-forsted-glass fz-forsted-panel" style="text-align: center;">
+                <div style="display: flex; flex-direction: row;  margin: 5px 0px;">
+                  <span>
+                    <div class="icon-like forsted-glass teal"><img style="width: 25px; height: 25px;" src="../../assets/img/usdt.png" class="icon"></div>
+                  </span>
+                  <span style="margin: 5px 10px;">USDT</span>
+                  <span>
+                    <form [formGroup]="depositForm">
+                        <input id="depositAmountInput" name="depositAmountInput" formControlName="depositAmountInput" class="form-control" placeholder="Enter shares" type="number">
+                    </form>
+                  </span>
+                </div>
+                <h6 class="card-subtitle mb-2" style="color: #ccc; margin: 20px 0px;">Balance: {{balance}} USDT</h6>
+                <button class="btn fz-gradient-purple fz-teal-btn fz-neon" (click)="deposit()">Deposit</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--        Collapse right card-->
+        <div class="col-md-6 board-list-item-left-card">
+
+          <div class="card card-transparent">
+            <div class="card-body">
+              <p>Deposit USDT into Heco LendHub USDT-ETH Fund to farm yields.</p>
+              <p>Smart contract of this fund automatically borrows assets from <a href="https://www.lendhub.online/en" target="_blank">LendHub</a> and forms MDEX USDT-ETH LPs to generate yields. Positions will be dynamically adjusted to hedge against impermanent loss.</p>
+              <div>
+                <div style="color: #adc6ff">FarmZeus Fees:</div>
+                <div>Deposit fee: 0%</div>
+                <div>Withdraw fee: 0%</div>
+                <div>Performance fee: 15%<sup>(?)</sup></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+<!--      Withdraw Panel-->
+
+      <div class="row" id="withdrawPanel" [hidden]="isDeposit">
+        <!--        Collapse left card-->
+        <div class="col-md-6 board-list-item-left-card">
+          <div class="card card-transparent">
+            <div class="card-body">
+              <h6 class="card-title">Withdraw USDT from Heco LendHub USDT-ETH Fund</h6>
+              <div class="fz-forsted-glass fz-forsted-panel" style="text-align: center;">
+                <div style="display: flex; flex-direction: row;  margin: 5px 0px;">
+                  <span>
+                    <div class="icon-like forsted-glass teal"><img style="width: 25px; height: 25px;" src="../../assets/img/usdt.png" class="icon"></div>
+                  </span>
+                  <span style="margin: 5px 10px;">Shares</span>
+                  <span>
+                    <form [formGroup]="withdrawForm">
+                      <input id="withdrawAmountInput" type="number" name="withdrawAmountInput" formControlName="withdrawAmountInput"
+                             class="form-control" placeholder="Enter shares" (input)="validate($event)">
+                    </form>
+                  </span>
+                  <span style="margin:10px;">
+                    <button class="fz-button-63 btn-sm" role="button" (click)="getMaxShare()">Max</button>
+                  </span>
+
+                </div>
+                <h6 class="card-subtitle mb-2" style="color: #ccc; margin: 20px 0px;">Deposited: {{totalShare}} Shares</h6>
+                <button class="btn fz-gradient-purple fz-teal-btn fz-neon" (click)="withdraw()">Withdraw</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--        Collapse right card-->
+        <div class="col-md-6 board-list-item-left-card">
+
+          <div class="card card-transparent">
+            <div class="card-body">
+              <p>Deposit USDT into Heco LendHub USDT-ETH Fund to farm yields.</p>
+              <p>Smart contract of this fund automatically borrows assets from <a href="https://www.lendhub.online/en" target="_blank">LendHub</a> and forms MDEX USDT-ETH LPs to generate yields. Positions will be dynamically adjusted to hedge against impermanent loss.</p>
+              <div>
+                <div style="color: #adc6ff">FarmZeus Fees:</div>
+                <div>Deposit fee: 0%</div>
+                <div>Withdraw fee: 0%</div>
+                <div>Performance fee: 15%<sup>(?)</sup></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+
+    </div>
+
+  </div>
+
+  <div class="board-list-item children-center fz-forsted-glass lightsmoke" >
+    <div class="board-list-item-upper" (click)="onItemClick()">
+      <div style="display: flex; flex-direction: row; margin: 0px 50px;">
+        <span>
+          <div class="icon-like forsted-glass teal"><img src="../../assets/img/sample-grand.svg" class="icon"></div>
+        </span>
+        <span style="margin: 5px 10px;">Saber stSOL-SOL LP</span>
+      </div>
+      <div style="margin: 0px ; font-size: 13px;"><span>$352,474 SOL</span><div style="color: #adc6ff;">TOTAL VALUE LOCKED</div></div>
+      <div style="margin: 0px 50px; font-size: 13px;"><span>N/A</span><div style="color: #adc6ff;">APY</div></div>
+    </div>
+
+
+    <div>
+
+    </div>
+
+  </div>
+
+  <div class=" children-center fz-forsted-glass lightsmoke" style="padding: 10px; display: flex; flex-direction:row; justify-content: space-between;">
+    <div style="display: flex; flex-direction: row; margin: 0px 50px;">
+      <span>
+        <div data-v-a4c8c8ac="" class="card icon-like forsted-glass teal"><img src="../../assets/img/sample-grand.svg" class="icon"></div>
+      </span>
+      <span style="margin: 5px 10px;">Saber stSOL-SOL LP</span>
+    </div>
+    <div style="margin: 0px ; font-size: 13px;"><span>$352,474 SOL</span><div style="color: #adc6ff;">Total value locked</div></div>
+    <div style="margin: 0px 50px; font-size: 13px;"><span>N/A</span><div style="color: #adc6ff;">APY</div></div>
+  </div>
+
+  <div class=" children-center fz-forsted-glass lightsmoke" style="padding: 10px; display: flex; flex-direction:row; justify-content: space-between;">
+    <div style="display: flex; flex-direction: row; margin: 0px 50px;">
+      <span>
+        <div data-v-a4c8c8ac="" class="card icon-like forsted-glass teal"><img src="../../assets/img/sample-grand.svg" class="icon"></div>
+      </span>
+      <span style="margin: 5px 10px;">Saber stSOL-SOL LP</span>
+    </div>
+    <div class="" style="margin: 0px ; font-size: 13px;"><span>$352,474 SOL</span><div style="color: #adc6ff;">Total value locked</div></div>
+    <div style="margin: 0px 50px; font-size: 13px;"><span>N/A</span><div style="color: #adc6ff;">APY</div></div>
+  </div>
+
+  <div class=" children-center fz-forsted-glass lightsmoke" style="padding: 10px; display: flex; flex-direction:row; justify-content: space-between;">
+    <div style="display: flex; flex-direction: row; margin: 0px 50px;">
+      <span>
+        <div data-v-a4c8c8ac="" class="card icon-like forsted-glass teal"><img src="../../assets/img/sample-grand.svg" class="icon"></div>
+      </span>
+      <span style="margin: 5px 10px;">Saber stSOL-SOL LP</span>
+    </div>
+    <div style="margin: 0px ; font-size: 13px;"><span>$352,474 SOL</span><div style="color: #adc6ff;">Total value locked</div></div>
+    <div style="margin: 0px 50px; font-size: 13px;"><span>N/A</span><div style="color: #adc6ff;">APY</div></div>
+  </div>
+
+
+</div>
